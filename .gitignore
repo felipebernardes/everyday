@@ -2,3 +2,4 @@ node_modules
 public/
 .tmp
 app.yaml
+.DS_Store
