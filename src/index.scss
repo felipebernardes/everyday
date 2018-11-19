@@ -8,6 +8,7 @@
 
 html {
   font-size: 16px;
+  font-family: sans-serif;
 }
 
 h1,
@@ -23,3 +24,7 @@ ul,
 ol {
   list-style: none;
 }
+
+$color-main: #009379;
+
+@import './components/new-project/new-project.scss';

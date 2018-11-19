@@ -3,33 +3,39 @@
   const DOMnewProjectButton = document.querySelector('[data-new-project-button]');
 
   const markUpStep1 = `
+                    <button class="new-project__dismiss-button" data-new-project-dismiss-button>X</button>
+
                     <h2>Step 1: Project Name</h2>
-                    <ul>
-                      <li></li>
-                      <li></li>
-                      <li></li>
+                    <ul class="step-counter">
+                      <li class="step-counter__step step-counter__step--active"></li>
+                      <li class="step-counter__step"></li>
+                      <li class="step-counter__step"></li>
                     </ul>
 
                     <label>What's the name of your project?</label>
-                    <input type="text" placeholder="my cool new project">
+                    <input type="text" placeholder="my cool new project" data-new-project-name-input>
 
-                    <p>or pick a suggestion below:</p>
-                    <ul>
-                      <li>- baby’s first weeks</li>
-                      <li>- summer gym</li>
-                      <li>- weigh gain</li>
-                      <li>- 2018 vacation</li>
-                    </ul>
+                    <section class="suggestions">
+                      <p>or pick a suggestion below:</p>
+                      <ul class="suggestions__list">
+                        <li class="suggestions__item" data-suggestion>- baby’s first weeks</li>
+                        <li class="suggestions__item" data-suggestion>- summer gym</li>
+                        <li class="suggestions__item" data-suggestion>- weigh gain</li>
+                        <li class="suggestions__item" data-suggestion>- 2018 vacation</li>
+                      </ul>
+                    <section>
 
-                    <button data-new-project-step-1-button>next</button>
+                    <button class="new-project__next-button" data-new-project-step-1-button>next</button>
                  `;
 
    const markUpStep2 = `
+                     <button class="new-project__dismiss-button" data-new-project-dismiss-button>X</button>
+
                      <h2>Step 2: Project Update Frequency</h2>
-                     <ul>
-                       <li></li>
-                       <li></li>
-                       <li></li>
+                     <ul class="step-counter">
+                       <li class="step-counter__step"></li>
+                       <li class="step-counter__step step-counter__step--active"></li>
+                       <li class="step-counter__step"></li>
                      </ul>
 
                      <label>How often do you plan to update it?</label>
@@ -42,46 +48,65 @@
 
                      <p>we'll help you remember to update your project daily</p>
 
-                     <button data-new-project-step-2-button>next</button>
+                     <button class="new-project__next-button" data-new-project-step-2-button>next</button>
                   `;
 
   const markUpStep3 = `
+                    <button class="new-project__dismiss-button" data-new-project-dismiss-button>X</button>
+
                     <h2>Step 3: All Set!</h2>
-                    <ul>
-                      <li></li>
-                      <li></li>
-                      <li></li>
+                    <ul class="step-counter">
+                      <li class="step-counter__step"></li>
+                      <li class="step-counter__step"></li>
+                      <li class="step-counter__step step-counter__step--active"></li>
                     </ul>
 
                     <p>your project was created!</p>
                     <p>you can start by taking the first photo</p>
 
-                    <button>take photo</button>
+                    <button class="new-project__photo-button">take photo</button>
 
-                    <button data-new-project-step-3-button>skip</button>
+                    <button class="new-project__next-button" data-new-project-step-3-button>skip</button>
                  `;
 
-    const render = (step) => {
-      if (step === 'step1') {
+    const render = (option) => {
+      if (option === 'step1') {
         DOMnewProjectContainer.innerHTML = markUpStep1;
+        DOMnewProjectContainer.classList.add('open');
         const step1button = document.querySelector('[data-new-project-step-1-button]');
+        const dismissButton = document.querySelector('[data-new-project-dismiss-button]');
+        const suggestions = document.querySelectorAll('[data-suggestion]');
+        const projectNameInput = document.querySelector('[data-new-project-name-input]')
+
+        suggestions.forEach(s => s.addEventListener('click', () => {
+          suggestions.forEach(otherSuggestion => otherSuggestion.classList.remove('selected'));
+          s.classList.add('selected');
+          projectNameInput.value = s.innerText.replace('-', '').trim();
+        }));
+
         step1button.addEventListener('click', () => {render('step2')});
+        dismissButton.addEventListener('click', () => {render('close')});
       }
 
-      if (step === 'step2') {
+      if (option === 'step2') {
         DOMnewProjectContainer.innerHTML = markUpStep2;
         const step2button = document.querySelector('[data-new-project-step-2-button]');
+        const dismissButton = document.querySelector('[data-new-project-dismiss-button]');
         step2button.addEventListener('click', () => {render('step3')});
+        dismissButton.addEventListener('click', () => {render('close')});
       }
 
-      if (step === 'step3') {
+      if (option === 'step3') {
         DOMnewProjectContainer.innerHTML = markUpStep3;
         const step3button = document.querySelector('[data-new-project-step-3-button]');
+        const dismissButton = document.querySelector('[data-new-project-dismiss-button]');
         step3button.addEventListener('click', () => {render('close')});
+        dismissButton.addEventListener('click', () => {render('close')});
       }
 
-      if (step === 'close') {
+      if (option === 'close') {
         DOMnewProjectContainer.innerHTML = '';
+        DOMnewProjectContainer.classList.remove('open');
       }
     }
 
