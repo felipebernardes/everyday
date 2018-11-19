@@ -14,8 +14,12 @@
   }
 
   h2 {
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    font-weight: normal;
     margin-bottom: 1rem;
     color: $color-main;
+    text-align: center;
   }
 
   label {
@@ -42,6 +46,7 @@
     background: none;
     padding: 1rem;
     font-size: 1.2rem;
+    cursor: pointer;
   }
 
   &__next-button {
@@ -56,10 +61,15 @@
     background: none;
     padding: 1rem;
     font-size: 1.2rem;
+    cursor: pointer;
   }
 
   .suggestions {
     margin-top: 3rem;
+
+    &__text {
+      color: $color-main;
+    }
 
     &__list {
       margin-top: .5rem;
@@ -75,6 +85,38 @@
       &.selected {
         opacity: 1;
       }
+    }
+  }
+
+  .frequency {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .frequency-help-text {
+    text-align: center;
+    max-width: 200px;
+    margin: 3rem auto; 
+
+    .highlight {
+      color: $color-main;
+    }
+  }
+
+  .radio-label {
+    transition: all .1s linear;
+    padding: 1rem;
+    color: $color-main;
+    background-color: rgba(#999, .1);
+    cursor: pointer;
+    opacity: .5;
+
+    &.selected {
+      opacity: 1;
+    }
+
+    input {
+      display: none;
     }
   }
 }
