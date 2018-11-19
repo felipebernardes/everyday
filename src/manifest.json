@@ -1,8 +1,8 @@
 {
   "name": "Everyday",
   "short_name": "Everyday",
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#009379",
+  "background_color": "#009379",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
