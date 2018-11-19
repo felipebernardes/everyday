@@ -25,109 +25,12 @@ ol {
   list-style: none;
 }
 
-$color-main: #009379;
-@import './components/new-project/new-project.scss';
-
 body {
     background-color: #fafafa;
     font-family: sans-serif;
 }
 
-.logo {
-    background-image: url('../img/logo.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 87px;
-    margin: 30px auto;
-    text-indent: 100%;
-    overflow: hidden;
-    width: 246px;
-}
-
-.project-list {
-    display: flex;
-    margin: 60px 0;
-    width: 100%;
-}
-
-.project-item {
-    margin: 0 auto;
-
-    &__text {
-        text-transform: uppercase;
-        color: green;
-        font-size: 0.6rem;
-    }
-
-    &__name {
-        color: #777;
-        font-weight: normal;
-        font-size: 1.4rem;
-        margin: 5px 0;
-    }
-}
-
-.project-images {
-    display: flex;
-    margin-top: 30px;
-
-    &__item {
-        width: 160px;
-
-        &:nth-child(1) {
-            margin: 40px 10px 40px 0;
-            width: 80px;
-        }
-
-        &:nth-child(2) {
-            margin: 20px -50px;
-            width: 120px;
-        }
-    }
-
-    &__image {
-        width: 100%;
-    }
-}
-
-.bottom-bar {
-    background-color: #fff;
-    box-shadow: 0px 1px 30px 2px rgba(2, 2 ,2 ,0.1);
-    bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    height: 54px;
-    left: 0;
-    position: absolute;
-    width: 100%;
-
-    &__button {
-        background: none;
-        border: none;
-        color: #777;
-        font-size: 1rem;
-        padding: 15px;
-    }
-}
-
-.step-counter {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    width: 100px;
-    margin: 2rem auto;
-
-  &__step {
-      height: 10px;
-      width: 10px;
-      background-color: #FFF;
-      transition: all .3s linear;
-      border: 1px solid #333;
-      border-radius: 50%;
-
-    &--active {
-        background-color: #333;
-    }
-  }
-}
+$color-main: #009379;
+@import './components/new-project/new-project.scss';
+@import './components/home/home.scss';
+@import './components/step-counter/step-counter.scss';

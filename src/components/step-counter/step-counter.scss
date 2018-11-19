@@ -1,0 +1,20 @@
+.step-counter {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    margin: 2rem auto;
+
+    &__step {
+        height: 10px;
+        width: 10px;
+        background-color: #FFF;
+        transition: all .3s linear;
+        border: 1px solid #333;
+        border-radius: 50%;
+
+        &--active {
+            background-color: #333;
+        }
+    }
+}
