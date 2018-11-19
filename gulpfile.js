@@ -7,13 +7,13 @@ responsive = require('gulp-responsive');
 imgMin = require('gulp-imagemin');
 
 gulp.task('js', () => {
-  gulp.src('./src/js/*.js')
+  gulp.src('./src/**/*.js')
   .pipe(concat('scripts.js'))
   .pipe(gulp.dest('./public/js/'));
 });
 
 gulp.task('scss', () => {
-  gulp.src('./src/scss/style.scss')
+  gulp.src('./src/index.scss')
   .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
   .pipe(autoprefixer({browsers: ['last 10 versions'], cascade: false}))
   .pipe(gulp.dest('./public/css/'));
@@ -30,7 +30,7 @@ gulp.task('manifest', () => {
 });
 
 gulp.task('serviceworker', () => {
-  gulp.src('./src/sw.js')
+  gulp.src('./src/service-worker.js')
   .pipe(gulp.dest('./public/'));
 });
 
@@ -40,16 +40,11 @@ gulp.task('img', () => {
   .pipe(gulp.dest('./public/img/'));
 });
 
-gulp.task('fonts', () => {
-  gulp.src('./src/fonts/*.*')
-  .pipe(gulp.dest('./public/fonts/'));
-});
-
-gulp.task('default', ['scss', 'js', 'img', 'html', 'fonts', 'manifest', 'serviceworker'], () => {
+gulp.task('default', ['scss', 'js', 'img', 'html', 'manifest', 'serviceworker'], () => {
   browserSync.init({server: "./public/"});
 
-  gulp.watch("./src/js/**/*.js", ['js']);
-  gulp.watch("./src/scss/**/*.scss", ['scss']);
+  gulp.watch("./src/**/*.js", ['js']);
+  gulp.watch("./src/**/*.scss", ['scss']);
   gulp.watch("./src/*.html", ['html']);
   gulp.watch("./src/img/*.*", ['img']);
 
