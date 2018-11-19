@@ -1,10 +1,9 @@
 .new-project {
   display: flex;
   flex-flow: column;
-  padding: 15vh 5vw;
-  text-align: left;
 
   &.open {
+    padding: 15vh 5vw;
     position: fixed;
     top: 0;
     left: 0;
