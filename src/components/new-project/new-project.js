@@ -52,7 +52,7 @@
                        </label>
                      </section>
 
-                     <p class="frequency-help-text">we'll help you remember to update your project <span class="highlight">daily</span></p>
+                     <p class="help-text">we'll help you remember to update your project <span class="highlight">daily</span></p>
 
                      <button class="new-project__next-button" data-new-project-step-2-button>next</button>
                   `;
@@ -67,8 +67,10 @@
                       <li class="step-counter__step step-counter__step--active"></li>
                     </ul>
 
-                    <p>your project was created!</p>
-                    <p>you can start by taking the first photo</p>
+                    <img src="img/success.png" alt="success icon">
+
+                    <p class="help-text">your project was created!</p>
+                    <p class="help-text">you can start by <span class="highlight">taking the first photo</span></p>
 
                     <button class="new-project__photo-button">take photo</button>
 
