@@ -16,5 +16,16 @@
         <button data-new-project-button>create new project</button>
     </main>
     <script src="js/scripts.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => {
+                console.info('Service Worker Registered', reg);
+            })
+            .catch(err => {
+                console.info('Error registering Service Worker', err);
+            });
+        }
+    </script>
   </body>
 </html>
