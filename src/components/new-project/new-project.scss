@@ -2,6 +2,10 @@
   display: flex;
   flex-flow: column;
 
+  img {
+    object-fit: contain;
+  }
+
   &.open {
     padding: 15vh 5vw;
     position: fixed;
@@ -93,10 +97,14 @@
     justify-content: space-between;
   }
 
-  .frequency-help-text {
+  .help-text {
     text-align: center;
-    max-width: 200px;
-    margin: 3rem auto; 
+    max-width: 280px;
+    margin: 3rem auto;
+
+    &+.help-text {
+      margin: -3rem auto 2rem auto;
+    }
 
     .highlight {
       color: $color-main;
@@ -118,5 +126,17 @@
     input {
       display: none;
     }
+  }
+
+  &__photo-button {
+    background-color: $color-main;
+    color: #fff;
+    border-radius: 3px;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-size: 1rem;
+    display: inline-block;
+    margin: auto;
+    border: none;
   }
 }
