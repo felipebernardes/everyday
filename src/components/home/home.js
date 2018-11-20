@@ -1,5 +1,18 @@
 (function newProjectComponent() {
   const DOMHomeContainer = document.querySelector('[data-home]');
+  const DOMaddPhotoInput = document.getElementById('[data-add-photo]');
+
+  DOMaddPhotoInput.addEventListener('change', (e) => {
+    const photo = e.target.files[0];
+    // verify which project is selected
+
+    // retrieve project from localstorage
+
+    // add file obj to localstorage
+
+    //clear files from input
+    e.target.files = [];
+  });
 
   const markUpHome = `
                   <h1 class="logo">Everyday</h1>
@@ -27,7 +40,10 @@
                   </ul>
                   <div class="bottom-bar">
                       <button type="button" name="button" class="bottom-bar__button">Play Project</button>
-                      <button type="button" name="button" class="bottom-bar__button">Add Photo</button>
+                      <label class="bottom-bar__button">
+                        Add Photo
+                        <input data-add-photo type="file" accept="image/*">
+                      </label>
                   </div>
                  `;
 
