@@ -172,7 +172,9 @@
     }
 
     window.addEventListener('load', () => {
+      window.setTimeout(() => {
         const DOMnewProjectButton = document.querySelector('[data-new-project-button]');
         DOMnewProjectButton.addEventListener('click', () => { render('step1') });
+      }, 100);
     });
 })();
