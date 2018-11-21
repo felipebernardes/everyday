@@ -1,4 +1,4 @@
-(function newProjectComponent() {
+ (function newProjectComponent() {
   const storageService = new StorageService();
   const ls = storageService.getLocalStorage();
   const projectList = ls.projects;
@@ -21,7 +21,7 @@
                       ${projectList.map(p => '<li class="step-counter__step"></li>').join('')}
                   </div>
                   <div class="bottom-bar">
-                      <button type="button" name="button" class="bottom-bar__button">Play Project</button>
+                      <button data-play-video type="button" name="button" class="bottom-bar__button">Play Project</button>
                       <label class="bottom-bar__button">
                         Add Photo
                         <input data-add-photo type="file" accept="image/*">
@@ -32,6 +32,7 @@
     const render = () => {
         DOMHomeContainer.innerHTML = markUpHome;
         const DOMaddPhotoInput = document.querySelector('[data-add-photo]');
+        const DOMplayVideoButton = document.querySelector('[data-play-video]');
         const DOMaddProjectList = document.querySelector('[data-project-list]');
         const projectsMarkup = projectList.map(p => {
           const photosMarkup = p.photos.reverse().map((photo, idx) => {
@@ -58,6 +59,14 @@
         }).join('');
 
         DOMaddProjectList.innerHTML += projectsMarkup;
+
+        DOMplayVideoButton.addEventListener('click', (e) => {
+          if (!selectedProject) {
+            return;
+          }
+          const videoContainer = document.querySelector('[data-video-player]');
+          const videoService = new VideoService(selectedProject, videoContainer);
+        });
 
         DOMaddPhotoInput.addEventListener('change', (e) => {
           if (!selectedProject) {
@@ -92,6 +101,7 @@
         container: '.project-list',
         items: 1,
         //useLocalStorage: false,
+        //"startIndex": 6,
         loop: false,
         controls: false
       });
