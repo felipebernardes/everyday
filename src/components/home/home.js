@@ -1,19 +1,5 @@
 (function newProjectComponent() {
   const DOMHomeContainer = document.querySelector('[data-home]');
-  const DOMaddPhotoInput = document.getElementById('[data-add-photo]');
-
-  DOMaddPhotoInput.addEventListener('change', (e) => {
-    const photo = e.target.files[0];
-    // verify which project is selected
-
-    // retrieve project from localstorage
-
-    // add file obj to localstorage
-
-    //clear files from input
-    e.target.files = [];
-  });
-
   const markUpHome = `
                   <h1 class="logo">Everyday</h1>
                   <ul class="project-list">
@@ -47,8 +33,54 @@
                   </div>
                  `;
 
+   const markUpHome2 = `
+                   <h1 class="logo">Everyday</h1>
+                   <ul class="project-list">
+                       <li class="project-item">
+                           <span class="project-item__text">new project</span>
+                           <h2 class="project-item__name">Start a new project</h2>
+                           <button data-new-project-button class="project-item__button">
+                            <img src="img/new-project.png" alt="new project button icon">
+                           </button>
+                       </li>
+                   </ul>
+                   <ul class="step-counter">
+                       <li class="step-counter__step step-counter__step--active"></li>
+                       <li class="step-counter__step"></li>
+                       <li class="step-counter__step"></li>
+                   </ul>
+                   <div class="bottom-bar">
+                       <button type="button" name="button" class="bottom-bar__button">Play Project</button>
+                       <label class="bottom-bar__button">
+                         Add Photo
+                         <input data-add-photo type="file" accept="image/*">
+                       </label>
+                   </div>
+                  `;
+
     const render = () => {
-        DOMHomeContainer.innerHTML = markUpHome;
+        DOMHomeContainer.innerHTML = markUpHome2;
+        const DOMaddPhotoInput = document.querySelector('[data-add-photo]');
+
+        DOMaddPhotoInput.addEventListener('change', (e) => {
+          const rawPhoto = e.target.files[0];
+          const fileReader = new FileReader();
+
+          fileReader.readAsDataURL(rawPhoto);
+
+          // verify which project is selected
+          // retrieve project from localstorage
+          // add file obj to localstorage
+
+          const photoObj = {
+            dateAdded: new Date(),
+            base64: fileReader.result
+          }
+          storageService = new StorageService();
+          currentProjectDatabase.photos.push(photoObj);
+
+          e.target.files = [];
+        });
     }
 
     window.addEventListener('load', () => { render() });

@@ -1,6 +1,5 @@
 (function newProjectComponent() {
   const DOMnewProjectContainer = document.querySelector('[data-new-project-section]');
-  const DOMnewProjectButton = document.querySelector('[data-new-project-button]');
   const storageService = new StorageService();
   const projectBeingCreated = {
     name: '',
@@ -172,5 +171,8 @@
       }
     }
 
-    DOMnewProjectButton.addEventListener('click', () => { render('step1') });
+    window.addEventListener('load', () => {
+        const DOMnewProjectButton = document.querySelector('[data-new-project-button]');
+        DOMnewProjectButton.addEventListener('click', () => { render('step1') });
+    });
 })();
