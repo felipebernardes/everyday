@@ -18,8 +18,7 @@
                   </ul>
                   <div class="step-counter">
                       <li class="step-counter__step step-counter__step--active"></li>
-                      <li class="step-counter__step"></li>
-                      <li class="step-counter__step"></li>
+                      ${projectList.map(p => '<li class="step-counter__step"></li>').join('')}
                   </div>
                   <div class="bottom-bar">
                       <button type="button" name="button" class="bottom-bar__button">Play Project</button>
@@ -87,6 +86,7 @@
 
     window.addEventListener('load', () => {
       render();
+      const steps = document.querySelectorAll('.step-counter__step');
 
       var slider = tns({
         container: '.project-list',
@@ -97,6 +97,9 @@
       });
 
       slider.events.on('transitionEnd', (info, eventName) => {
+        steps.forEach(s => s.classList.remove('step-counter__step--active'))
+        steps[info.navCurrentIndex].classList.add('step-counter__step--active');
+
         if (info.navCurrentIndex === 0) {
           selectedProject = null;
         }
