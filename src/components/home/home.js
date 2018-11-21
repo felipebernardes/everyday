@@ -1,29 +1,15 @@
 (function newProjectComponent() {
+  const storageService = new StorageService();
   const DOMHomeContainer = document.querySelector('[data-home]');
   const markUpHome = `
                   <h1 class="logo">Everyday</h1>
-                  <ul class="project-list">
+                  <ul data-project-list class="project-list">
                       <li class="project-item">
                           <span class="project-item__text">new project</span>
                           <h2 class="project-item__name">Start a new project</h2>
                           <button data-new-project-button class="project-item__button">
                            <img src="img/new-project.png" alt="new project button icon">
                           </button>
-                      </li>
-                      <li class="project-item">
-                          <span class="project-item__text">project</span>
-                          <h2 data-project-title class="project-item__name">Macieira no quintal</h2>
-                          <ul class="project-images">
-                              <li class="project-images__item">
-                                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYU1s9SJjAZXdwkVtSY5heHy7KhBDu8Yf5K38kdrT6bgq5ULe" alt=""  class="project-images__image">
-                              </li>
-                              <li class="project-images__item">
-                                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYU1s9SJjAZXdwkVtSY5heHy7KhBDu8Yf5K38kdrT6bgq5ULe" alt=""  class="project-images__image">
-                              </li>
-                              <li class="project-images__item">
-                                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYU1s9SJjAZXdwkVtSY5heHy7KhBDu8Yf5K38kdrT6bgq5ULe" alt=""  class="project-images__image">
-                              </li>
-                          </ul>
                       </li>
                   </ul>
                   <div class="step-counter">
@@ -47,6 +33,29 @@
     const render = () => {
         DOMHomeContainer.innerHTML = markUpHome;
         const DOMaddPhotoInput = document.querySelector('[data-add-photo]');
+        const DOMaddProjectList = document.querySelector('[data-project-list]');
+        const projectList = storageService.getLocalStorage().projects;
+        const projectsMarkup = projectList.map(p => {
+          const photosMarkup = p.photos.map(photo => {
+            return `
+            <li class="project-images__item">
+                <img src="${photo.base64}" class="project-images__image">
+            </li>
+            `
+          }).join('');
+
+          return `
+            <li class="project-item">
+              <span class="project-item__text">project</span>
+              <h2 data-project-title class="project-item__name">${p.name}</h2>
+              <ul class="project-images">
+                ${photosMarkup}
+              </ul>
+            </li>
+          `
+        }).join('');
+
+        DOMaddProjectList.innerHTML += projectsMarkup;
 
         DOMaddPhotoInput.addEventListener('change', (e) => {
           const selectedProject = getSelectedProject();
@@ -55,7 +64,6 @@
             return;
           }
 
-          const storageService = new StorageService();
           const selectedProjectDatabase = storageService.getProject(selectedProject.querySelector('[data-project-title]').innerText);
           const rawPhoto = e.target.files[0];
           const fileReader = new FileReader();
