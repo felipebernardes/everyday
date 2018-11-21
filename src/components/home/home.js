@@ -56,7 +56,7 @@
                   `;
 
 
-    const getSelectedProject = () {
+    const getSelectedProject = () => {
       return document.querySelector('[data-selected-project]');
     }
 
