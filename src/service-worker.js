@@ -5,7 +5,7 @@ const filesToCache = [
     '/js/libs.js',
     //'/js/scripts.js',
     '/css/libs.css',
-    '/css/index.css',
+    //'/css/index.css',
     '/img/logo.png',
     '/img/new-project.png',
     '/img/success.png'

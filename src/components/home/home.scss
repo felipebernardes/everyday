@@ -49,23 +49,39 @@ body {
 .project-images {
     display: flex;
     margin-top: 30px;
+    flex-flow: row-reverse;
+    width: 100%;
+    justify-content: center;
 
     &__item {
         width: 160px;
-
-        &:nth-child(1) {
-            margin: 40px 10px 40px 0;
-            width: 80px;
-        }
+        height: 160px;
+        z-index: 3;
+        transform: translateX(-10%);
 
         &:nth-child(2) {
-            margin: 20px -50px;
             width: 120px;
+            height: 120px;
+            left: -80px;
+            top: 80px;
+            z-index: 2;
+            transform: translate(10%, 30px);
+        }
+
+        &:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            left: -120px;
+            top: 120px;
+            z-index: 1;
+            transform: translate(30%, 50px);
         }
     }
 
     &__image {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 

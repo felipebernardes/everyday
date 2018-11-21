@@ -1,5 +1,9 @@
 (function newProjectComponent() {
   const storageService = new StorageService();
+  const ls = storageService.getLocalStorage();
+  const projectList = ls.projects;
+  let selectedProject;
+
   const DOMHomeContainer = document.querySelector('[data-home]');
   const markUpHome = `
                   <h1 class="logo">Everyday</h1>
@@ -26,17 +30,16 @@
                   </div>
                  `;
 
-    const getSelectedProject = () => {
-      return document.querySelector('[data-selected-project]');
-    }
-
     const render = () => {
         DOMHomeContainer.innerHTML = markUpHome;
         const DOMaddPhotoInput = document.querySelector('[data-add-photo]');
         const DOMaddProjectList = document.querySelector('[data-project-list]');
-        const projectList = storageService.getLocalStorage().projects;
         const projectsMarkup = projectList.map(p => {
-          const photosMarkup = p.photos.map(photo => {
+          const photosMarkup = p.photos.map((photo, idx) => {
+            if (idx > 2) {
+              return;
+            }
+            
             return `
             <li class="project-images__item">
                 <img src="${photo.base64}" class="project-images__image">
@@ -58,13 +61,10 @@
         DOMaddProjectList.innerHTML += projectsMarkup;
 
         DOMaddPhotoInput.addEventListener('change', (e) => {
-          const selectedProject = getSelectedProject();
-
           if (!selectedProject) {
             return;
           }
 
-          const selectedProjectDatabase = storageService.getProject(selectedProject.querySelector('[data-project-title]').innerText);
           const rawPhoto = e.target.files[0];
           const fileReader = new FileReader();
           let photoObj;
@@ -77,7 +77,9 @@
               base64: fileReader.result
             }
 
-            selectedProjectDatabase.photos.push(photoObj);
+            selectedProject.photos.push(photoObj);
+            storageService.saveLocalStorage(ls);
+            render();
           };
         });
     }
@@ -94,7 +96,11 @@
       });
 
       slider.events.on('transitionEnd', (info, eventName) => {
-        console.log(info.navCurrentIndex);
+        if (info.navCurrentIndex === 0) {
+          selectedProject = null;
+        }
+
+        selectedProject = projectList[info.navCurrentIndex - 1];
       });
     });
 })();
