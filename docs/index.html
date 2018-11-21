@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#009379">
+    <link rel="manifest" href="/manifest.json">
+    <title>Everyday</title>
+    <link rel="stylesheet" href="css/libs.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <div class="offline-message"></div>
+    <main>
+        <section data-home></section>
+        <section class="video-player" data-video-player></section>
+        <section class="new-project" data-new-project-section></section>
+    </main>
+    <script src="js/scripts.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js', {scope: '/'})
+            .then(reg => {
+                console.info('Service Worker Registered', reg);
+            })
+            .catch(err => {
+                console.info('Error registering Service Worker', err);
+            });
+        }
+    </script>
+
+    <script src="js/libs.js"></script>
+  </body>
+</html>
