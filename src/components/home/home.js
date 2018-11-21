@@ -4,6 +4,13 @@
                   <h1 class="logo">Everyday</h1>
                   <ul class="project-list">
                       <li class="project-item">
+                          <span class="project-item__text">new project</span>
+                          <h2 class="project-item__name">Start a new project</h2>
+                          <button data-new-project-button class="project-item__button">
+                           <img src="img/new-project.png" alt="new project button icon">
+                          </button>
+                      </li>
+                      <li class="project-item">
                           <span class="project-item__text">project</span>
                           <h2 data-project-title class="project-item__name">Macieira no quintal</h2>
                           <ul class="project-images">
@@ -19,11 +26,11 @@
                           </ul>
                       </li>
                   </ul>
-                  <ul class="step-counter">
+                  <div class="step-counter">
                       <li class="step-counter__step step-counter__step--active"></li>
                       <li class="step-counter__step"></li>
                       <li class="step-counter__step"></li>
-                  </ul>
+                  </div>
                   <div class="bottom-bar">
                       <button type="button" name="button" class="bottom-bar__button">Play Project</button>
                       <label class="bottom-bar__button">
@@ -33,35 +40,12 @@
                   </div>
                  `;
 
-   const markUpHome2 = `
-                   <h1 class="logo">Everyday</h1>
-                   <ul class="project-list">
-                       <li class="project-item">
-                           <span class="project-item__text">new project</span>
-                           <h2 class="project-item__name">Start a new project</h2>
-                           <button data-new-project-button class="project-item__button">
-                            <img src="img/new-project.png" alt="new project button icon">
-                           </button>
-                       </li>
-                   </ul>
-                   <ul class="step-counter">
-                       <li class="step-counter__step step-counter__step--active"></li>
-                       <li class="step-counter__step"></li>
-                       <li class="step-counter__step"></li>
-                   </ul>
-                   <div class="bottom-bar">
-                       <button type="button" name="button" class="bottom-bar__button">Play Project</button>
-                       <label class="bottom-bar__button">Add Photo<input data-add-photo type="file" accept="image/*"></label>
-                   </div>
-                  `;
-
-
     const getSelectedProject = () => {
       return document.querySelector('[data-selected-project]');
     }
 
     const render = () => {
-        DOMHomeContainer.innerHTML = markUpHome2;
+        DOMHomeContainer.innerHTML = markUpHome;
         const DOMaddPhotoInput = document.querySelector('[data-add-photo]');
 
         DOMaddPhotoInput.addEventListener('change', (e) => {
@@ -90,5 +74,19 @@
         });
     }
 
-    window.addEventListener('load', () => { render() });
+    window.addEventListener('load', () => {
+      render();
+
+      var slider = tns({
+        container: '.project-list',
+        items: 1,
+        //useLocalStorage: false,
+        loop: false,
+        controls: false
+      });
+
+      slider.events.on('transitionEnd', (info, eventName) => {
+        console.log(info.navCurrentIndex);
+      });
+    });
 })();
