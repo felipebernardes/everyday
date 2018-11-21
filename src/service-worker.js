@@ -1,10 +1,14 @@
-const staticCache = 'everyday-static-v1';
+const staticCache = 'everyday-static-v2';
 const filesToCache = [
     '/',
     '/index.html',
+    '/js/libs.js',
     //'/js/scripts.js',
+    '/css/libs.css',
     '/css/index.css',
     '/img/logo.png',
+    '/img/new-project.png',
+    '/img/success.png'
 ];
 
 // Cache on install
