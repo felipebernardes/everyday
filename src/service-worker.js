@@ -1,18 +1,20 @@
-const staticCache = 'everyday-static-v2';
+const staticCache = 'everyday-static-v1';
 const filesToCache = [
     '/',
+    '/manifest.json',
     '/index.html',
     '/js/libs.js',
-    //'/js/scripts.js',
+    '/js/scripts.js',
     '/css/libs.css',
-    //'/css/index.css',
+    '/css/index.css',
     '/img/logo.png',
     '/img/new-project.png',
     '/img/success.png'
 ];
 
 // Cache on install
-this.addEventListener('install', event => {
+this.addEventListener('install', (event) => {
+    debugger;
     console.info('[ServiceWorker] Install');
     event.waitUntil(
         caches.open(staticCache).then(cache => {
@@ -22,7 +24,7 @@ this.addEventListener('install', event => {
     );
 });
 
-// Clear cache on activate
+
 this.addEventListener('activate', event => {
     console.info('[ServiceWorker] Activate');
     event.waitUntil(
@@ -39,13 +41,17 @@ this.addEventListener('activate', event => {
     return self.clients.claim();
 });
 
-this.addEventListener('fetch', event => {
+this.addEventListener('fetch', (event) => {
     console.info('[Service Worker] Fetch', event.request.url);
 
+    event.preventDefault();
     //return cached static files
     event.respondWith(
         caches.match(event.request).then(cacheResponse => {
+            console.log('cache', cacheResponse);
             return cacheResponse || fetch(event.request);
+        }).catch((err) => {
+          console.log('sw error', err);
         })
     );
 });
