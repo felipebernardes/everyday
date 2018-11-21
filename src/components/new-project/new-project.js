@@ -1,6 +1,13 @@
 (function newProjectComponent() {
   const DOMnewProjectContainer = document.querySelector('[data-new-project-section]');
   const DOMnewProjectButton = document.querySelector('[data-new-project-button]');
+  const storageService = new StorageService();
+  const projectBeingCreated = {
+    name: '',
+    updateFrequency: 'daily',
+    dateCreated: new Date(),
+    photos: []
+  }
 
   const markUpStep1 = `
                     <button class="new-project__dismiss-button" data-new-project-dismiss-button>X</button>
@@ -72,7 +79,10 @@
                     <p class="help-text">your project was created!</p>
                     <p class="help-text">you can start by <span class="highlight">taking the first photo</span></p>
 
-                    <button class="new-project__photo-button">take photo</button>
+                    <label data-new-project-add-photo class="new-project__photo-button">
+                      Take Photo
+                      <input data-add-photo type="file" accept="image/*">
+                    </label>
 
                     <button class="new-project__next-button" data-new-project-step-3-button>skip</button>
                  `;
@@ -86,13 +96,16 @@
         const suggestions = document.querySelectorAll('[data-suggestion]');
         const projectNameInput = document.querySelector('[data-new-project-name-input]')
 
-        suggestions.forEach(s => s.addEventListener('click', () => {
+        suggestions.forEach(s => s.addEventListener ('click', () => {
           suggestions.forEach(otherSuggestion => otherSuggestion.classList.remove('selected'));
           s.classList.add('selected');
           projectNameInput.value = s.innerText.replace('-', '').trim();
         }));
 
-        step1button.addEventListener('click', () => {render('step2')});
+        step1button.addEventListener('click', () => {
+          projectBeingCreated.name = projectNameInput.value;
+          render('step2');
+        });
         dismissButton.addEventListener('click', () => {render('close')});
       }
 
@@ -101,15 +114,20 @@
         const step2button = document.querySelector('[data-new-project-step-2-button]');
         const dismissButton = document.querySelector('[data-new-project-dismiss-button]');
         const frequency = document.querySelectorAll('[data-frequency]');
-        const highlight = document.querySelector('.highlight')
+        const highlight = document.querySelector('.highlight');
+        let selectedFrequency;
 
         frequency.forEach(f => f.addEventListener('click', () => {
           frequency.forEach(otherFrequency => otherFrequency.classList.remove('selected'));
           f.classList.add('selected');
+          selectedFrequency = f.querySelector('input').value;
           highlight.innerText = f.querySelector('input').value;
         }));
 
-        step2button.addEventListener('click', () => {render('step3')});
+        step2button.addEventListener('click', () => {
+          projectBeingCreated.updateFrequency = selectedFrequency;
+          render('step3');
+        });
         dismissButton.addEventListener('click', () => {render('close')});
       }
 
@@ -117,8 +135,35 @@
         DOMnewProjectContainer.innerHTML = markUpStep3;
         const step3button = document.querySelector('[data-new-project-step-3-button]');
         const dismissButton = document.querySelector('[data-new-project-dismiss-button]');
-        step3button.addEventListener('click', () => {render('close')});
-        dismissButton.addEventListener('click', () => {render('close')});
+
+        const DOMaddPhotoInput = document.querySelector('[data-new-project-add-photo]');
+        DOMaddPhotoInput.addEventListener('change', (e) => {
+          const rawPhoto = e.target.files[0];
+          const fileReader = new FileReader();
+
+          fileReader.readAsDataURL(rawPhoto);
+
+          let photoObj;
+
+          fileReader.onload = () => {
+            photoObj = {
+              dateAdded: new Date(),
+              base64: fileReader.result
+            }
+
+            projectBeingCreated.photos[0] = photoObj;
+          };
+        });
+
+        step3button.addEventListener('click', () => {
+          storageService.saveProject(projectBeingCreated);
+          render('close');
+        });
+
+        dismissButton.addEventListener('click', () => {
+          storageService.saveProject(projectBeingCreated);
+          render('close');
+        });
       }
 
       if (option === 'close') {

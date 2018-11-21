@@ -138,5 +138,9 @@
     display: inline-block;
     margin: auto;
     border: none;
+
+    input {
+      display: none;
+    }
   }
 }

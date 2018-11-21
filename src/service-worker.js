@@ -2,7 +2,7 @@ const staticCache = 'everyday-static-v1';
 const filesToCache = [
     '/',
     '/index.html',
-    '/js/scripts.js',
+    //'/js/scripts.js',
     '/css/index.css',
     '/img/logo.png',
 ];
