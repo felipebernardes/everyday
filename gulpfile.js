@@ -12,6 +12,18 @@ gulp.task('js', () => {
   .pipe(gulp.dest('./public/js/'));
 });
 
+gulp.task('js:libs', () => {
+  gulp.src('./node_modules/tiny-slider/dist/min/tiny-slider.js')
+  .pipe(concat('libs.js'))
+  .pipe(gulp.dest('./public/js/'));
+});
+
+gulp.task('css:libs', () => {
+  gulp.src('./node_modules/tiny-slider/dist/tiny-slider.css')
+  .pipe(concat('libs.css'))
+  .pipe(gulp.dest('./public/css/'));
+});
+
 gulp.task('scss', () => {
   gulp.src('./src/index.scss')
   .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
@@ -40,7 +52,7 @@ gulp.task('img', () => {
   .pipe(gulp.dest('./public/img/'));
 });
 
-gulp.task('default', ['scss', 'js', 'img', 'html', 'manifest', 'serviceworker'], () => {
+gulp.task('default', ['css:libs', 'scss', 'js:libs', 'js', 'img', 'html', 'manifest', 'serviceworker'], () => {
   browserSync.init({server: "./public/"});
 
   gulp.watch("./src/**/*.js", ['js']);
