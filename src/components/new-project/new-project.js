@@ -151,6 +151,8 @@
             }
 
             projectBeingCreated.photos[0] = photoObj;
+            storageService.saveProject(projectBeingCreated);
+            render('close');
           };
         });
 
@@ -168,6 +170,7 @@
       if (option === 'close') {
         DOMnewProjectContainer.innerHTML = '';
         DOMnewProjectContainer.classList.remove('open');
+        location.reload();
       }
     }
 

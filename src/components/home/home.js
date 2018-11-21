@@ -35,11 +35,11 @@
         const DOMaddPhotoInput = document.querySelector('[data-add-photo]');
         const DOMaddProjectList = document.querySelector('[data-project-list]');
         const projectsMarkup = projectList.map(p => {
-          const photosMarkup = p.photos.map((photo, idx) => {
+          const photosMarkup = p.photos.reverse().map((photo, idx) => {
             if (idx > 2) {
               return;
             }
-            
+
             return `
             <li class="project-images__item">
                 <img src="${photo.base64}" class="project-images__image">
@@ -77,9 +77,10 @@
               base64: fileReader.result
             }
 
+            selectedProject.photos.reverse();
             selectedProject.photos.push(photoObj);
             storageService.saveLocalStorage(ls);
-            render();
+            location.reload();
           };
         });
     }
