@@ -15,9 +15,17 @@ body {
     width: 246px;
 }
 
+.tns-outer button {
+  display: none;
+}
+
 .project-list {
     display: flex;
     width: 100%;
+
+  .tns-outer button {
+    display: none;
+  }
 }
 
 .project-item {
