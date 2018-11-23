@@ -1,9 +1,10 @@
  (function newProjectComponent() {
   const storageService = new StorageService();
   const ls = storageService.getLocalStorage();
-  const projectList = ls.projects;
+  const projectList = storageService.getLocalStorage().projects;
   let selectedProject;
 
+  const DOMnotification = document.querySelector('.notification');
   const DOMHomeContainer = document.querySelector('[data-home]');
   const markUpHome = `
                   <h1 class="logo">Everyday</h1>
@@ -87,10 +88,24 @@
 
             selectedProject.photos.reverse();
             selectedProject.photos.push(photoObj);
-            storageService.saveLocalStorage(ls);
-            location.reload();
+            selectedProject.hasRecentlyAddedPhoto = true;
+
+            storageService.saveProject(selectedProject);
+            setTimeout(() => location.reload(), 100);
           };
         });
+    }
+
+    const checkHasRecentlyAddedPhoto = () => {
+      let idx;
+      projectList.forEach((p, i) => {
+        if (p.hasRecentlyAddedPhoto) {
+          p.hasRecentlyAddedPhoto = false;
+          storageService.saveProject(p);
+          idx = i;
+        }
+      });
+      return idx;
     }
 
     window.addEventListener('load', () => {
@@ -100,11 +115,10 @@
       var slider = tns({
         container: '.project-list',
         items: 1,
-        //useLocalStorage: false,
-        //"startIndex": 6,
         loop: false,
         controls: false
       });
+
 
       slider.events.on('transitionEnd', (info, eventName) => {
         steps.forEach(s => s.classList.remove('step-counter__step--active'))
@@ -116,5 +130,14 @@
 
         selectedProject = projectList[info.navCurrentIndex - 1];
       });
+
+      const hasRecentlyAddedPhoto = checkHasRecentlyAddedPhoto();
+      debugger;
+      if (hasRecentlyAddedPhoto >= 0) {
+        DOMnotification.classList.add('animate');
+        slider.goTo(hasRecentlyAddedPhoto + 1);
+      } else {
+        slider.goTo(projectList.length + 1);
+      }
     });
 })();

@@ -41,9 +41,6 @@ this.addEventListener('activate', event => {
 });
 
 this.addEventListener('fetch', (event) => {
-    console.info('[Service Worker] Fetch', event.request.url);
-
-    event.preventDefault();
     //return cached static files
     event.respondWith(
         caches.match(event.request).then(cacheResponse => {
@@ -69,23 +66,27 @@ class StorageService {
   }
 
   saveLocalStorage(ls) {
+    window.localStorage.removeItem('everyday-database');
     window.localStorage.setItem('everyday-database', JSON.stringify(ls));
   }
 
-  getProject(projectName) {
+  getProjectIndex(projectName) {
     const ls = this.getLocalStorage();
-    const rawProject = ls.projects.filter(p => p.name === projectName);
-    if (rawProject.length > 0) {
-      return JSON.parse(rawProject);
-    }
+    let projectIndex;
   }
 
   saveProject(updatedProject) {
-    const project = this.getProject(updatedProject.name);
+    let projectIndex;
     const ls = this.getLocalStorage();
 
-    if (project) {
-      project = updatedProject;
+    ls.projects.forEach((p, i) => {
+      if (p.name === updatedProject.name) {
+        projectIndex = i;
+      };
+    });
+
+    if (projectIndex >= 0) {
+      ls.projects[projectIndex] = updatedProject;
     } else {
       ls.projects.push(updatedProject);
     }
@@ -154,9 +155,10 @@ class VideoService {
  (function newProjectComponent() {
   const storageService = new StorageService();
   const ls = storageService.getLocalStorage();
-  const projectList = ls.projects;
+  const projectList = storageService.getLocalStorage().projects;
   let selectedProject;
 
+  const DOMnotification = document.querySelector('.notification');
   const DOMHomeContainer = document.querySelector('[data-home]');
   const markUpHome = `
                   <h1 class="logo">Everyday</h1>
@@ -240,10 +242,24 @@ class VideoService {
 
             selectedProject.photos.reverse();
             selectedProject.photos.push(photoObj);
-            storageService.saveLocalStorage(ls);
-            location.reload();
+            selectedProject.hasRecentlyAddedPhoto = true;
+
+            storageService.saveProject(selectedProject);
+            setTimeout(() => location.reload(), 100);
           };
         });
+    }
+
+    const checkHasRecentlyAddedPhoto = () => {
+      let idx;
+      projectList.forEach((p, i) => {
+        if (p.hasRecentlyAddedPhoto) {
+          p.hasRecentlyAddedPhoto = false;
+          storageService.saveProject(p);
+          idx = i;
+        }
+      });
+      return idx;
     }
 
     window.addEventListener('load', () => {
@@ -253,11 +269,10 @@ class VideoService {
       var slider = tns({
         container: '.project-list',
         items: 1,
-        //useLocalStorage: false,
-        //"startIndex": 6,
         loop: false,
         controls: false
       });
+
 
       slider.events.on('transitionEnd', (info, eventName) => {
         steps.forEach(s => s.classList.remove('step-counter__step--active'))
@@ -269,6 +284,15 @@ class VideoService {
 
         selectedProject = projectList[info.navCurrentIndex - 1];
       });
+
+      const hasRecentlyAddedPhoto = checkHasRecentlyAddedPhoto();
+      debugger;
+      if (hasRecentlyAddedPhoto >= 0) {
+        DOMnotification.classList.add('animate');
+        slider.goTo(hasRecentlyAddedPhoto + 1);
+      } else {
+        slider.goTo(projectList.length + 1);
+      }
     });
 })();
 
@@ -425,6 +449,8 @@ class VideoService {
             }
 
             projectBeingCreated.photos[0] = photoObj;
+            projectBeingCreated.hasRecentlyAddedPhoto = true;
+
             storageService.saveProject(projectBeingCreated);
             render('close');
           };

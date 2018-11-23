@@ -41,9 +41,6 @@ this.addEventListener('activate', event => {
 });
 
 this.addEventListener('fetch', (event) => {
-    console.info('[Service Worker] Fetch', event.request.url);
-
-    event.preventDefault();
     //return cached static files
     event.respondWith(
         caches.match(event.request).then(cacheResponse => {

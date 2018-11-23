@@ -9,23 +9,27 @@ class StorageService {
   }
 
   saveLocalStorage(ls) {
+    window.localStorage.removeItem('everyday-database');
     window.localStorage.setItem('everyday-database', JSON.stringify(ls));
   }
 
-  getProject(projectName) {
+  getProjectIndex(projectName) {
     const ls = this.getLocalStorage();
-    const rawProject = ls.projects.filter(p => p.name === projectName);
-    if (rawProject.length > 0) {
-      return JSON.parse(rawProject);
-    }
+    let projectIndex;
   }
 
   saveProject(updatedProject) {
-    const project = this.getProject(updatedProject.name);
+    let projectIndex;
     const ls = this.getLocalStorage();
 
-    if (project) {
-      project = updatedProject;
+    ls.projects.forEach((p, i) => {
+      if (p.name === updatedProject.name) {
+        projectIndex = i;
+      };
+    });
+
+    if (projectIndex >= 0) {
+      ls.projects[projectIndex] = updatedProject;
     } else {
       ls.projects.push(updatedProject);
     }

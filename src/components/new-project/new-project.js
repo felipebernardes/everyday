@@ -151,6 +151,8 @@
             }
 
             projectBeingCreated.photos[0] = photoObj;
+            projectBeingCreated.hasRecentlyAddedPhoto = true;
+
             storageService.saveProject(projectBeingCreated);
             render('close');
           };

@@ -187,3 +187,36 @@ body {
     }
   }
 }
+
+.notification {
+  padding: 1rem;
+  font-weight: bold;
+  background-color: rgba($color-main, .8);
+  color: #fff;
+  font-family: monospace;
+  font-size: .9rem;
+  line-height: 1.1rem;
+  position: fixed;
+  left: 0;
+  bottom: -10vh;
+  width: 100%;
+
+  &.animate {
+    animation-name: notification-animation;
+    animation-duration: 2.5s;
+  }
+}
+
+@keyframes notification-animation {
+  0% {
+    bottom: -10vh;
+  }
+
+  50% {
+    bottom: 0;
+  }
+
+  100% {
+    bottom: -10vh;
+  }
+}
