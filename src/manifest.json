@@ -5,9 +5,9 @@
   "background_color": "#009379",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/?utm_source=homescreen",
   "lang": "en-US",
-  "orientation": "any",
+  "orientation": "portrait",
   "icons": [{
       "src": "img/icon-128x128.png",
       "sizes": "128x128",
@@ -27,6 +27,11 @@
     }, {
       "src": "img/icon-256x256.png",
       "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }]
 }

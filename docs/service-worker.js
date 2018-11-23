@@ -13,7 +13,7 @@ const filesToCache = [
 ];
 
 // Cache on install
-this.addEventListener('install', event => {
+this.addEventListener('install', (event) => {
     console.info('[ServiceWorker] Install');
     event.waitUntil(
         caches.open(staticCache).then(cache => {
@@ -23,7 +23,7 @@ this.addEventListener('install', event => {
     );
 });
 
-/* Clear cache on activate
+
 this.addEventListener('activate', event => {
     console.info('[ServiceWorker] Activate');
     event.waitUntil(
@@ -38,15 +38,19 @@ this.addEventListener('activate', event => {
     );
     // runs SW instantly in any existing tab previously from SW activation
     return self.clients.claim();
-});*/
+});
 
 this.addEventListener('fetch', (event) => {
     console.info('[Service Worker] Fetch', event.request.url);
 
+    event.preventDefault();
     //return cached static files
     event.respondWith(
         caches.match(event.request).then(cacheResponse => {
+            console.log('cache', cacheResponse);
             return cacheResponse || fetch(event.request);
+        }).catch((err) => {
+          console.log('sw error', err);
         })
     );
 });

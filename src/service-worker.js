@@ -14,7 +14,6 @@ const filesToCache = [
 
 // Cache on install
 this.addEventListener('install', (event) => {
-    debugger;
     console.info('[ServiceWorker] Install');
     event.waitUntil(
         caches.open(staticCache).then(cache => {
