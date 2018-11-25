@@ -132,7 +132,6 @@
       });
 
       const hasRecentlyAddedPhoto = checkHasRecentlyAddedPhoto();
-      debugger;
       if (hasRecentlyAddedPhoto >= 0) {
         DOMnotification.classList.add('animate');
         slider.goTo(hasRecentlyAddedPhoto + 1);
