@@ -4,8 +4,8 @@
   "theme_color": "#009379",
   "background_color": "#009379",
   "display": "standalone",
-  "scope": "/everyday",
-  "start_url": "https://felipebernardes.github.io/everyday?utm_source=homescreen",
+  "scope": "/",
+  "start_url": ".",
   "lang": "en-US",
   "orientation": "portrait",
   "icons": [{
