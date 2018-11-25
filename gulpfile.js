@@ -7,7 +7,7 @@ responsive = require('gulp-responsive');
 imgMin = require('gulp-imagemin');
 
 gulp.task('js', () => {
-  gulp.src('./src/**/*.js')
+  gulp.src(['./src/components/**/*.js', './src/services/*.js'])
   .pipe(concat('scripts.js'))
   .pipe(gulp.dest('./public/js/'))
   .pipe(gulp.dest('./docs/js/'));
