@@ -4,8 +4,8 @@
   "theme_color": "#009379",
   "background_color": "#009379",
   "display": "standalone",
-  "scope": "/",
-  "start_url": ".",
+  "scope": "/everyday",
+  "start_url": "/everyday",
   "lang": "en-US",
   "orientation": "portrait",
   "icons": [{
