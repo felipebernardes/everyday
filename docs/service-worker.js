@@ -1,4 +1,4 @@
-const staticCache = 'everyday-static-v1';
+const staticCache = 'everyday-static-v3';
 const filesToCache = [
     '/',
     '/manifest.json',
@@ -9,7 +9,13 @@ const filesToCache = [
     '/css/index.css',
     '/img/logo.png',
     '/img/new-project.png',
-    '/img/success.png'
+    '/img/success.png',
+    '/img/icon-128x128.png',
+    '/img/icon-144x144.png',
+    '/img/icon-152x152.png',
+    '/img/icon-192x192.png',
+    '/img/icon-256x256.png',
+    '/img/icon-512x512.png'
 ];
 
 // Cache on install
@@ -41,9 +47,7 @@ this.addEventListener('activate', event => {
 });
 
 this.addEventListener('fetch', (event) => {
-    console.info('[Service Worker] Fetch', event.request.url);
-
-    event.preventDefault();
+    console.info('[ServiceWorker] Fetch', event.request);
     //return cached static files
     event.respondWith(
         caches.match(event.request).then(cacheResponse => {

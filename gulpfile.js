@@ -7,8 +7,13 @@ responsive = require('gulp-responsive');
 imgMin = require('gulp-imagemin');
 
 gulp.task('js', () => {
-  gulp.src(['./src/components/**/*.js', './src/services/*.js'])
-  .pipe(concat('scripts.js'))
+  gulp.src('./src/services/*.js')
+  .pipe(concat('services.js'))
+  .pipe(gulp.dest('./public/js/'))
+  .pipe(gulp.dest('./docs/js/'));
+
+  gulp.src('./src/components/**/*.js')
+  .pipe(concat('components.js'))
   .pipe(gulp.dest('./public/js/'))
   .pipe(gulp.dest('./docs/js/'));
 });

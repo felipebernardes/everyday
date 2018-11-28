@@ -28,16 +28,16 @@
     <link rel="stylesheet" href="css/index.css">
   </head>
   <body>
+    <div class="notification"></div>
     <div class="offline-message"></div>
     <main>
         <section data-home></section>
         <section class="video-player" data-video-player></section>
         <section class="new-project" data-new-project-section></section>
     </main>
-    <script src="js/scripts.js"></script>
     <script>
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js', {scope: '/everyday/'})
+        navigator.serviceWorker.register('service-worker.js', {scope: '/'})
             .then(reg => {
                 console.info('Service Worker Registered', reg);
             })
@@ -46,7 +46,8 @@
             });
         }
     </script>
-
     <script src="js/libs.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/components.js"></script>
   </body>
 </html>
