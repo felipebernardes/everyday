@@ -1,5 +1,5 @@
- (function newProjectComponent() {
-  const storageService = new StorageService();
+(function homeComponent() {
+  var storageService = new StorageService();
   const ls = storageService.getLocalStorage();
   const projectList = storageService.getLocalStorage().projects;
   let selectedProject;
@@ -81,17 +81,33 @@
           fileReader.readAsDataURL(rawPhoto);
 
           fileReader.onload = () => {
-            photoObj = {
-              dateAdded: new Date(),
-              base64: fileReader.result
+            var img = new Image();
+            img.src = fileReader.result;
+            img.onload = () => {
+              const resizeWidth = 300;
+              const scaleFactor = resizeWidth / img.width;
+
+              const canvas = document.createElement("canvas");
+              canvas.width = resizeWidth;
+              canvas.height = img.height * scaleFactor;
+
+              const ctx = canvas.getContext("2d")
+
+              ctx.drawImage(img, 0, 0, resizeWidth, img.height * scaleFactor);
+              var imgAsDataURL = canvas.toDataURL("image/jpeg");
+
+              photoObj = {
+                dateAdded: new Date(),
+                base64: imgAsDataURL
+              }
+
+              selectedProject.photos.reverse();
+              selectedProject.photos.push(photoObj);
+              selectedProject.hasRecentlyAddedPhoto = true;
+
+              storageService.saveProject(selectedProject);
+              setTimeout(() => location.reload(), 100);
             }
-
-            selectedProject.photos.reverse();
-            selectedProject.photos.push(photoObj);
-            selectedProject.hasRecentlyAddedPhoto = true;
-
-            storageService.saveProject(selectedProject);
-            setTimeout(() => location.reload(), 100);
           };
         });
     }

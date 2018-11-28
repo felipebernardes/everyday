@@ -1,6 +1,6 @@
 (function newProjectComponent() {
   const DOMnewProjectContainer = document.querySelector('[data-new-project-section]');
-  const storageService = new StorageService();
+  const newProjectStorageService = new StorageService();
   const projectBeingCreated = {
     name: '',
     updateFrequency: 'daily',
@@ -153,18 +153,18 @@
             projectBeingCreated.photos[0] = photoObj;
             projectBeingCreated.hasRecentlyAddedPhoto = true;
 
-            storageService.saveProject(projectBeingCreated);
+            newProjectStorageService.saveProject(projectBeingCreated);
             render('close');
           };
         });
 
         step3button.addEventListener('click', () => {
-          storageService.saveProject(projectBeingCreated);
+          newProjectStorageService.saveProject(projectBeingCreated);
           render('close');
         });
 
         dismissButton.addEventListener('click', () => {
-          storageService.saveProject(projectBeingCreated);
+          newProjectStorageService.saveProject(projectBeingCreated);
           render('close');
         });
       }
