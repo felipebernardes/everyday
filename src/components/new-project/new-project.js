@@ -139,22 +139,38 @@
         DOMaddPhotoInput.addEventListener('change', (e) => {
           const rawPhoto = e.target.files[0];
           const fileReader = new FileReader();
+          let photoObj;
 
           fileReader.readAsDataURL(rawPhoto);
 
-          let photoObj;
-
           fileReader.onload = () => {
-            photoObj = {
-              dateAdded: new Date(),
-              base64: fileReader.result
+            var img = new Image();
+            img.src = fileReader.result;
+
+            img.onload = () => {
+              const resizeWidth = 300;
+              const scaleFactor = resizeWidth / img.width;
+
+              const canvas = document.createElement("canvas");
+              canvas.width = resizeWidth;
+              canvas.height = img.height * scaleFactor;
+
+              const ctx = canvas.getContext("2d")
+
+              ctx.drawImage(img, 0, 0, resizeWidth, img.height * scaleFactor);
+              var imgAsDataURL = canvas.toDataURL("image/jpeg");
+
+              photoObj = {
+                dateAdded: new Date(),
+                base64: imgAsDataURL
+              }
+              
+              projectBeingCreated.photos[0] = photoObj;
+              projectBeingCreated.hasRecentlyAddedPhoto = true;
+
+              newProjectStorageService.saveProject(projectBeingCreated);
+              render('close');
             }
-
-            projectBeingCreated.photos[0] = photoObj;
-            projectBeingCreated.hasRecentlyAddedPhoto = true;
-
-            newProjectStorageService.saveProject(projectBeingCreated);
-            render('close');
           };
         });
 

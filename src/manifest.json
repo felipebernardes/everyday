@@ -5,7 +5,7 @@
   "background_color": "#009379",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/?utm_source=homescreen",
+  "start_url": "/",
   "lang": "en-US",
   "orientation": "portrait",
   "icons": [{
