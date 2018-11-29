@@ -1,10 +1,12 @@
 const staticCache = 'everyday-static-v3';
 const filesToCache = [
     '/',
+    '/utm_source=homescreen',
     '/manifest.json',
     '/index.html',
     '/js/libs.js',
-    '/js/scripts.js',
+    '/js/services.js',
+    '/js/components.js',
     '/css/libs.css',
     '/css/index.css',
     '/img/logo.png',

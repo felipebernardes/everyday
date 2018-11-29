@@ -188,7 +188,7 @@ body {
   }
 }
 
-.notification {
+.notification-message {
   padding: 1rem;
   font-weight: bold;
   background-color: rgba($color-main, .8);
@@ -198,7 +198,7 @@ body {
   line-height: 1.1rem;
   position: fixed;
   left: 0;
-  bottom: -10vh;
+  top: -10vh;
   width: 100%;
 
   &.animate {
@@ -209,14 +209,14 @@ body {
 
 @keyframes notification-animation {
   0% {
-    bottom: -10vh;
+    top: -10vh;
   }
 
   50% {
-    bottom: 0;
+    top: 0;
   }
 
   100% {
-    bottom: -10vh;
+    top: -10vh;
   }
 }

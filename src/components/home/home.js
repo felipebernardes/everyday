@@ -4,7 +4,7 @@
   const projectList = storageService.getLocalStorage().projects;
   let selectedProject;
 
-  const DOMnotification = document.querySelector('.notification');
+  const DOMnotification = document.querySelector('.notification-message');
   const DOMHomeContainer = document.querySelector('[data-home]');
   const markUpHome = `
                   <h1 class="logo">Everyday</h1>
